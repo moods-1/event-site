@@ -65,13 +65,14 @@ export async function POST(req: Request) {
 		const user = {
 			clerkId: id,
 			email: email_addresses[0].email_address,
-			//username can be a null
 			username: username!,
 			firstName: first_name,
 			lastName: last_name,
 			photo: image_url,
 		};
+
 		const newUser = await createUser(user);
+
 		if (newUser) {
 			await clerkClient.users.updateUserMetadata(id, {
 				publicMetadata: {
@@ -79,8 +80,10 @@ export async function POST(req: Request) {
 				},
 			});
 		}
+
 		return NextResponse.json({ message: 'OK', user: newUser });
 	}
+
 	if (eventType === 'user.updated') {
 		const { id, image_url, first_name, last_name, username } = evt.data;
 
@@ -103,9 +106,6 @@ export async function POST(req: Request) {
 
 		return NextResponse.json({ message: 'OK', user: deletedUser });
 	}
-
-	console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-	console.log('Webhook body:', body);
 
 	return new Response('', { status: 200 });
 }
