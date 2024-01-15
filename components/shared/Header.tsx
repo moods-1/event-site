@@ -11,7 +11,7 @@ const Header = () => {
 			<div className='wrapper flex items-center justify-between'>
 				<Link href='/' className='w-36'>
 					<Image
-						src='/assets/images/moods-events-sm.png'
+						src='/assets/images/logo.png'
 						width={128}
 						height={38}
 						alt='Events logo'
