@@ -1,28 +1,31 @@
 'use client';
-import { headerLinks } from '@/constants';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+
+import { headerLinks } from '@/constants'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React from 'react'
 
 const NavItems = () => {
-	const pathname = usePathname();
-	return (
-		<ul className='w-full md:flex-between md:flex-row flex flex-col gap-5 items-start'>
-			{headerLinks.map(({ label, route }) => {
-				const isActive = pathname === route;
-				return (
-					<Link
-						href={route}
-						key={route}
-						className={`${
-							isActive ? 'active-link' : ''
-						} flex-center p-medium-16 whitespace-nowrap`}
-					>
-						{label}
-					</Link>
-				);
-			})}
-		</ul>
-	);
-};
+  const pathname = usePathname();
 
-export default NavItems;
+  return (
+    <ul className="md:flex-between flex w-full flex-col items-start gap-5 md:flex-row">
+      {headerLinks.map((link) => {
+        const isActive = pathname === link.route;
+        
+        return (
+          <li
+            key={link.route}
+            className={`${
+              isActive && 'text-primary-500'
+            } flex-center p-medium-16 whitespace-nowrap`}
+          >
+            <Link href={link.route}>{link.label}</Link>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+export default NavItems
