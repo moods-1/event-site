@@ -34,8 +34,9 @@ export async function POST(req: Request) {
 	}
 
 	// Get the body
-	const payload = await req.json();
+	const payload: WebhookEvent = await req.json();
 	const body = JSON.stringify(payload);
+	console.log({ body });
 
 	// Create a new Svix instance with your secret.
 	const wh = new Webhook(WEBHOOK_SECRET);
@@ -73,7 +74,6 @@ export async function POST(req: Request) {
 		};
 
 		const newUser = await createUser(user);
-
 		if (newUser) {
 			await clerkClient.users.updateUserMetadata(id, {
 				publicMetadata: {
@@ -81,7 +81,6 @@ export async function POST(req: Request) {
 				},
 			});
 		}
-
 		return NextResponse.json({ message: 'OK', user: newUser });
 	}
 
@@ -96,7 +95,6 @@ export async function POST(req: Request) {
 		};
 
 		const updatedUser = await updateUser(id, user);
-
 		return NextResponse.json({ message: 'OK', user: updatedUser });
 	}
 
